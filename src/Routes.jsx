@@ -14,8 +14,8 @@ const Routes = () => {
     <RNDRoutes>
       <Route path='/' element={<Home />} />
       <Route path='/:id' element={<Video />} />
-      <Route path='/signin' element={<SignIn />} />
-      <Route path='/signup' element={<SignUp />} />
+      <Route path='/sign-in' element={<SignIn />} />
+      <Route path='/sign-up' element={<SignUp />} />
       
       <Route path='*' element={<Navigate to='/' />} />
     </RNDRoutes>
