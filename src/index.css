@@ -4,6 +4,17 @@
 
 
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #737373;
+  border-radius: 10px;
+}
+
+
+
 body, div#root {
   height: 100vh;
 }

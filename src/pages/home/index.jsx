@@ -1,15 +1,30 @@
+import { useState } from 'react';
+
 import Header from './Header';
-import Nav from './Nav';
+import NavMaximized from './NavMaximized';
+import NavMinimized from './NavMinimized';
 import Main from './Main';
 
 
 
 const Home = () => {
+  const [navbarSize, setNavbarSize] = useState('maximized');
+
+
+
+  function changeNavbarSize() {
+    if (navbarSize === 'maximized') setNavbarSize('minimized');
+    else setNavbarSize('maximized');
+  }
+
+
+
   return (
     <div className='h-screen flex flex-col'>
-      <Header />
-      <div className='flex-1 flex'>
-        <Nav />
+      <Header changeNavbarSize={changeNavbarSize} />
+      <div className='flex-1 flex overflow-auto'>
+        {(navbarSize === 'maximized') && <NavMaximized />}
+        {(navbarSize === 'minimized') && <NavMinimized />}
         <Main />
       </div>
     </div>

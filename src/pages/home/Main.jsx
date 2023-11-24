@@ -1,6 +1,6 @@
 const Main = () => {
   return (
-    <main>
+    <main className='flex-[5]'>
       main
     </main>
   );
