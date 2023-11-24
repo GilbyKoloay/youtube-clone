@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import {
   Burger,
@@ -7,15 +6,13 @@ import {
   Search,
   Cross,
   Microphone,
-  Dots,
-  Profile
+  Dots
 } from '../../assets/svg';
+import { SignInButton } from '../../components';
 
 
 
-const Header = () => {
-  const navigate = useNavigate();
-  
+const Header = ({ changeNavbarSize }) => {
   const [isSearchQueryFocused, setIsSearchQueryFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -25,7 +22,11 @@ const Header = () => {
     <header className='py-2 px-4 flex justify-between gap-48'>
       <div className='flex gap-4'>
         <button className='p-2 rounded-full hover:bg-neutral-800'>
-          <img src={Burger} alt='nav' />
+          <img
+            src={Burger}
+            alt='nav'
+            onClick={changeNavbarSize}
+          />
         </button>
 
         <img
@@ -77,15 +78,12 @@ const Header = () => {
 
 
 
-      <div className='flex gap-4'>
+      <div className='flex gap-4 items-center'>
         <button className='p-2 rounded-full hover:bg-neutral-800' title='Settings'>
           <img src={Dots} alt='settings' />
         </button>
 
-        <button className='py-1 px-2 border border-neutral-700 rounded-full flex items-center gap-2 hover:bg-cyan-900' onClick={() => navigate('/sign-in')}>
-          <img src={Profile} alt='profile' />
-          <span className='text-sm text-blue-500 font-bold'>Sign in</span>
-        </button>
+        <SignInButton />
       </div>
     </header>
   );
