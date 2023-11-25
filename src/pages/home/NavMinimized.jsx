@@ -17,6 +17,8 @@ const Button = ({ imgSrc, children }) => {
   );
 };
 
+
+
 const NavMinimized = () => {
   return (
     <nav className='p-1 overflow-auto'>

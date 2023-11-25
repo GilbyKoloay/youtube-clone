@@ -19,7 +19,7 @@ const Header = ({ changeNavbarSize }) => {
 
 
   return (
-    <header className='py-2 px-4 flex justify-between gap-48'>
+    <header className='py-2 pl-4 pr-8 flex justify-between gap-48'>
       <div className='flex gap-4'>
         <button className='p-2 rounded-full hover:bg-neutral-800'>
           <img
@@ -60,7 +60,7 @@ const Header = ({ changeNavbarSize }) => {
             <button className='rounded-full hover:bg-neutral-800' onClick={() => setSearchQuery('')}>
               <img
                 className='h-4/5'
-                src={Cross }
+                src={Cross}
                 alt='clear'
               />
             </button>
@@ -78,7 +78,7 @@ const Header = ({ changeNavbarSize }) => {
 
 
 
-      <div className='flex gap-4 items-center'>
+      <div className='flex gap-2 items-center'>
         <button className='p-2 rounded-full hover:bg-neutral-800' title='Settings'>
           <img src={Dots} alt='settings' />
         </button>

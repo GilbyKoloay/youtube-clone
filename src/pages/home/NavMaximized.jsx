@@ -32,17 +32,23 @@ const Button = ({ imgSrc, children, isActive }) => {
   );
 };
 
+
+
 const Hr = () => {
   return <hr className='border-neutral-700' />
 };
+
+
 
 const BottomSectionButton = ({ children }) => {
   return <button className='text-xs font-bold text-neutral-400'>{children}</button>
 };
 
+
+
 const NavMaximized = () => {
   return (
-    <nav className='flex-1 overflow-auto'>
+    <nav className='flex-[4] overflow-auto'>
       <section className='p-3'>
         <Button imgSrc={Home} isActive>Home</Button>
         <Button imgSrc={Shorts}>Shorts</Button>
