@@ -1,8 +1,24 @@
+import { useState, useEffect } from 'react';
+
 import { Dots } from '../../assets/svg';
 
 
 
-const VideoList = ({ videoList=null }) => {
+const VideoList = () => {
+  const [videoList, setVideoList] = useState(null);
+
+
+
+  useEffect(() => {
+    loadVideo();
+  }, []);
+
+
+
+  async function loadVideo() {
+    
+  }
+
   function toProperVideoTotalView(value) {
     return value;
     
@@ -23,7 +39,7 @@ const VideoList = ({ videoList=null }) => {
   if (!videoList) {
     return (
       <div className='pr-8 flex-1 mt-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-3 gap-x-4 overflow-auto'>
-        {[...new Array(9)].map((video, index) => (
+        {[...new Array(9)].map((_, index) => (
           <div key={index} className='mt-6 grid grid-rows-3'>
             <div className='row-span-2 relative'>
               <div className='h-full w-full aspect-video rounded-xl bg-neutral-800' />
@@ -49,7 +65,7 @@ const VideoList = ({ videoList=null }) => {
 
   return (
     <div className='pr-8 flex-1 mt-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-3 gap-x-4 overflow-auto'>
-      {[...videoList, ...videoList, ...videoList, ...videoList, ...videoList].map((video, index) => (
+      {videoList.map((video, index) => (
         <button key={index} className='mt-6 grid grid-rows-3'>
           <div className='row-span-2 relative'>
             <img
