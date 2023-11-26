@@ -8,6 +8,7 @@ import Cross from './cross.svg';
 import Microphone from './microphone.svg';
 import Dots from './dots.svg';
 import ProfileEllipse from './profile-ellipse.svg';
+import ProfileEllipseBlue from './profile-ellipse-blue.svg';
 import Home from './home.svg';
 import Shorts from './shorts.svg';
 import Subscriptions from './subscriptions.svg';
@@ -34,6 +35,8 @@ import Download from './download.svg';
 import Videos from './videos.svg';
 import ProfileRectangle from './profile-rectangle.svg';
 import Filter from './filter.svg';
+import Google from './google.svg';
+import ArrowDown from './arrow-down.svg';
 
 
 
@@ -46,6 +49,7 @@ export {
   Microphone,
   Dots,
   ProfileEllipse,
+  ProfileEllipseBlue,
   Home,
   Shorts,
   Subscriptions,
@@ -71,5 +75,7 @@ export {
   Download,
   Videos,
   ProfileRectangle,
-  Filter
+  Filter,
+  Google,
+  ArrowDown
 };

@@ -45,10 +45,11 @@ const Video = () => {
             <div className='flex-[2] flex flex-col gap-3'>
               <div className='bg-neutral-500 h-128 aspect-video rounded-xl' />
               <div className='flex flex-col gap-3'>
-                {video
-                  ? <div className='text-lg font-bold'>video.title</div>
-                  : <div className='w-1/2 p-3 bg-neutral-800 rounded-sm' />
-                }
+                {video ? (
+                  <div className='text-lg font-bold'>video.title</div>
+                ) : (
+                  <div className='w-1/2 p-3 bg-neutral-800 rounded-sm' />
+                )}
                 <Control video={video} />
                 <Description video={video} />
                 {video && <Comments />}
