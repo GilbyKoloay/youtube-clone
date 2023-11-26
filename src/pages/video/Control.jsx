@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -8,11 +8,58 @@ import {
   Download,
   Dots
 } from '../../assets/svg';
+import { toProperCount } from '../../functions';
 
 
 
-const Control = ({ video }) => {
+const youtubeApiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
+
+
+
+const ChannelImage = ({ channelId, video, setVideo }) => {
+  const [image, setImage] = useState('');
+
+
+
+  useEffect(() => {
+    getChannelImage();
+  }, []);
+
+
+
+  async function getChannelImage() {
+    const req = await fetch(`https://youtube.googleapis.com/youtube/v3/channels?key=${youtubeApiKey}&id=${channelId}&part=snippet%2Cstatistics`);
+    const res = await req.json();
+    
+    if (res.error) console.log('Unable to load channel.', res.error);
+    else if (res.items) {
+      setVideo({...video, subscribers: res.items[0]?.statistics?.subscriberCount});
+      setImage(res?.items[0]?.snippet?.thumbnails?.high?.url);
+    }
+  }
+
+
+
+  return (
+    <img
+      className='h-10 w-10 rounded-full bg-neutral-500'
+      src={image}
+      alt='channel'
+    />
+  );
+};
+
+
+
+const Control = ({ video, setVideo }) => {
   const subscribeDialogRef = useRef();
+
+
+
+  function removeFloatingPointValue(value) {
+    if (toProperCount(value).includes('.')) return `${toProperCount(value).slice(0, -3)}${toProperCount(value).slice(-1)}`;
+    return value;
+  }
 
 
 
@@ -25,10 +72,14 @@ const Control = ({ video }) => {
         )
         : (
           <div className='flex items-center'>
-            <div className='h-10 w-10 bg-neutral-500 rounded-full' />
+            <ChannelImage
+              channelId={video.channelId}
+              video={video}
+              setVideo={setVideo}
+            />
             <div className='ml-3 mr-6'>
               <div className='font-bold'>{video.channelName}</div>
-              <div className='text-xs text-neutral-500'>{video.subscribers} subscribers</div>
+              <div className='text-xs text-neutral-500'>{removeFloatingPointValue(video.subscribers)} subscribers</div>
             </div>
             <SubscribeDialog thisRef={subscribeDialogRef} />
             <ControlButton onClick={() => subscribeDialogRef.current.showModal()} theme='light' isLong>Subscribe</ControlButton>
@@ -50,11 +101,11 @@ const Control = ({ video }) => {
             <div className='flex items-center'>
               <button className='py-2 px-4 border-r border-neutral-500 rounded-l-full font-bold text-sm bg-neutral-800 hover:bg-neutral-700 text-neutral-300 flex items-center gap-1' title='I like this'>
                 <img src={Like} alt='like' />
-                {video.likes}
+                {removeFloatingPointValue(video.likes)}
               </button>
               <button className='py-2 px-4 border-l border-neutral-500 rounded-r-full font-bold text-sm bg-neutral-800 hover:bg-neutral-700 text-neutral-300 flex items-center gap-1' title='I dislike this'>
                 <img src={Dislike} alt='dislike' />
-                {video.dislikes}
+                {removeFloatingPointValue(video.dislikes)}
               </button>
             </div>
 

@@ -1,6 +1,43 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Videos, ProfileRectangle } from '../../assets/svg';
+import { countDateDifference } from '../../functions';
+
+
+
+const youtubeApiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
+
+
+
+const ChannelImage = ({ channelId }) => {
+  const [image, setImage] = useState('');
+
+
+
+  useEffect(() => {
+    getChannelImage();
+  }, []);
+
+
+
+  async function getChannelImage() {
+    const req = await fetch(`https://youtube.googleapis.com/youtube/v3/channels?key=${youtubeApiKey}&id=${channelId}&part=snippet%2Cstatistics`);
+    const res = await req.json();
+    
+    if (res.error) console.log('Unable to load channel.', res.error);
+    else if (res.items) setImage(res?.items[0]?.snippet?.thumbnails?.high?.url);
+  }
+
+
+
+  return (
+    <img
+      className='h-16 w-16 rounded-full bg-neutral-500'
+      src={image}
+      alt='channel'
+    />
+  );
+};
 
 
 
@@ -34,8 +71,7 @@ const Description = ({ video }) => {
       {/* <----- description header */}
       <div className='flex gap-2'>
         <span className='font-bold text-sm'>{video.views} views</span>
-        <span className='font-bold text-sm'>{video.uploadDateTime}</span>
-        {video.tags.map((tag, index) => <span key={index} className='font-bold text-sm text-neutral-400'>{tag}</span>)}
+        <span className='font-bold text-sm'>{countDateDifference(video.publishedAt)}</span>
       </div>
       {/* description header -----> */}
 
@@ -48,7 +84,7 @@ const Description = ({ video }) => {
       {isExpanded && (
         <>
           <div className='mt-8 flex items-center gap-2'>
-            <div className='h-16 w-16 rounded-full bg-neutral-500' />
+            <ChannelImage channelId={video.channelId} />
             <div className='flex flex-col'>
               <span className='font-bold text-lg'>{video.channelName}</span>
               <span className='text-sm'>{video.subscribers} subscribers</span>
