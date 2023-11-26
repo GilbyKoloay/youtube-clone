@@ -49,6 +49,8 @@ const Video = () => {
         comments: res.items[0]?.statistics?.commentCount
       };
       setVideo(newVideo);
+
+      document.title = newVideo.title;
     }
   }
 

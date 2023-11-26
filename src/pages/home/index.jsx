@@ -20,6 +20,7 @@ const Home = () => {
 
 
   useEffect(() => {
+    document.title = 'YouTube';
     getCategoryList();
   }, []);
 

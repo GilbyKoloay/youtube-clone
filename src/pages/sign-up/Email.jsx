@@ -1,8 +1,16 @@
+import { useEffect } from 'react';
+
 import SignForm from '../../components/SignForm';
 
 
 
 const Email = ({ onSubmit, email, setEmail }) => {
+  useEffect(() => {
+    document.title = 'YouTube';
+  }, []);
+
+
+
   return (
     <SignForm.Form onSubmit={onSubmit}>
       <SignForm.Title>Create your Gmail address</SignForm.Title>

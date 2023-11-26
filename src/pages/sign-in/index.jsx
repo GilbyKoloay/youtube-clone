@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import EmailOrPhone from './EmailOrPhone';
@@ -13,6 +13,12 @@ const SignIn = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+
+
+
+  useEffect(() => {
+    document.title = 'YouTube';
+  }, []);
   
 
 
