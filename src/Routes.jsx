@@ -1,10 +1,11 @@
-import { Routes as RNDRoutes, Route, Navigate } from 'react-router-dom';
+import { Routes as RNDRoutes, Route } from 'react-router-dom';
 
 import {
   Home,
   Video,
   SignIn,
-  SignUp
+  SignUp,
+  NotFound
 } from './pages';
 
 
@@ -16,8 +17,7 @@ const Routes = () => {
       <Route path='/:id' element={<Video />} />
       <Route path='/sign-in' element={<SignIn />} />
       <Route path='/sign-up' element={<SignUp />} />
-      
-      <Route path='*' element={<Navigate to='/' />} />
+      <Route path='/not-found' element={<NotFound />} />
     </RNDRoutes>
   );
 };
