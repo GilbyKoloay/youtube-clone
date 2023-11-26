@@ -121,7 +121,7 @@ const VideoList = ({ videoList=null }) => {
 
 const Main = () => {
   return (
-    <main className='pt-3 pb-8 pl-8 flex-[18] overflow-auto flex flex-col'>
+    <main className='pt-3 pb-8 pl-8 flex-1 overflow-auto flex flex-col'>
       <CategoryList />
       <VideoList />
     </main>

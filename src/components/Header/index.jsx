@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Burger,
@@ -8,11 +9,13 @@ import {
   Microphone,
   Dots
 } from '../../assets/svg';
-import { SignInButton } from '../../components';
+import { SignInButton } from '../';
 
 
 
-const Header = ({ changeNavbarSize }) => {
+const Header = ({ burgerOnClick }) => {
+  const navigate = useNavigate();
+
   const [isSearchQueryFocused, setIsSearchQueryFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -25,7 +28,7 @@ const Header = ({ changeNavbarSize }) => {
           <img
             src={Burger}
             alt='nav'
-            onClick={changeNavbarSize}
+            onClick={burgerOnClick}
           />
         </button>
 
@@ -33,7 +36,7 @@ const Header = ({ changeNavbarSize }) => {
           className='h-5 my-auto hover:cursor-pointer'
           src={YouTube}
           alt='youtube'
-          onClick={() => window.location.reload()}
+          onClick={() => navigate('/')}
         />
       </div>
 

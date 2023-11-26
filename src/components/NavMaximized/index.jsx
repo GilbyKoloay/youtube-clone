@@ -1,3 +1,5 @@
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import {
   Home,
   Shorts,
@@ -19,13 +21,18 @@ import {
   Help,
   Feedback
 } from '../../assets/svg';
-import { SignInButton } from '../../components';
+import { SignInButton } from '../';
 
 
 
-const Button = ({ imgSrc, children, isActive }) => {
+const Button = ({
+  imgSrc,
+  onClick,
+  children,
+  isActive
+}) => {
   return (
-    <button className={`w-full py-2 px-3 rounded-lg flex items-center gap-6 ${isActive ? 'bg-neutral-800 hover:bg-neutral-700' : 'hover:bg-neutral-800'}`}>
+    <button className={`w-full py-2 px-3 rounded-lg flex items-center gap-6 ${isActive ? 'bg-neutral-800 hover:bg-neutral-700' : 'hover:bg-neutral-800'}`} onClick={onClick}>
       <img src={imgSrc} alt='item-img' className='max-h-8' />
       <span className={`text-sm ${isActive ? 'font-bold' : ''}`}>{children}</span>
     </button>
@@ -47,10 +54,21 @@ const BottomSectionButton = ({ children }) => {
 
 
 const NavMaximized = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+
+
   return (
-    <nav className='flex-[4] overflow-auto'>
+    <nav className='overflow-auto' style={{backgroundColor: '#0f0f0f'}}>
       <section className='p-3'>
-        <Button imgSrc={Home} isActive>Home</Button>
+        <Button
+          imgSrc={Home}
+          onClick={() => navigate('/')}
+          isActive={pathname === '/'}
+        >
+          Home
+        </Button>
         <Button imgSrc={Shorts}>Shorts</Button>
         <Button imgSrc={Subscriptions}>Subscriptions</Button>
       </section>
@@ -64,8 +82,9 @@ const NavMaximized = () => {
 
       <Hr />
 
-      <section className='py-4 px-8 flex flex-col gap-3'>
-        <span className='text-sm'>Sign in to like videos, comment, and subscribe.</span>
+      <section className='py-4 px-8 flex flex-col'>
+        <span className='text-sm'>Sign in to like videos,</span>
+        <span className='text-sm mb-3'>comment, and subscribe.</span>
         <SignInButton />
       </section>
 

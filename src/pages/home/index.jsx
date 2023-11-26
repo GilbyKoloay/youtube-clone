@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-import Header from './Header';
-import NavMaximized from './NavMaximized';
-import NavMinimized from './NavMinimized';
+import { Header, NavMaximized, NavMinimized } from '../../components';
 import Main from './Main';
 
 
@@ -21,7 +19,7 @@ const Home = () => {
 
   return (
     <div className='h-screen flex flex-col'>
-      <Header changeNavbarSize={changeNavbarSize} />
+      <Header burgerOnClick={changeNavbarSize} />
       <div className='flex-1 flex overflow-auto'>
         {(navbarSize === 'maximized') && <NavMaximized />}
         {(navbarSize === 'minimized') && <NavMinimized />}
