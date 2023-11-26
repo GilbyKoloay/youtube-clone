@@ -1,7 +1,8 @@
 // assets/svg
 
 import Burger from './burger.svg';
-import YouTube from './youtube.svg';
+import YouTubeLight from './youtube-light.svg';
+import YouTubeDark from './youtube-dark.svg';
 import Search from './search.svg';
 import Cross from './cross.svg';
 import Microphone from './microphone.svg';
@@ -38,7 +39,8 @@ import Filter from './filter.svg';
 
 export {
   Burger,
-  YouTube,
+  YouTubeLight,
+  YouTubeDark,
   Search,
   Cross,
   Microphone,

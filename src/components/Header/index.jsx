@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import {
   Burger,
-  YouTube,
+  YouTubeLight,
   Search,
   Cross,
   Microphone,
@@ -35,7 +35,7 @@ const Header = ({ burgerOnClick }) => {
 
         <img
           className='h-5 my-auto hover:cursor-pointer'
-          src={YouTube}
+          src={YouTubeLight}
           alt='youtube'
           onClick={() => navigate('/')}
         />
