@@ -21,11 +21,13 @@ const Password = ({
           value={password}
           onChange={setPassword}
           placeholder='Password'
+          hidden={isPasswordHidden}
         />
         <SignForm.Input
           value={confirmPassword}
           onChange={setConfirmPassword}
           placeholder='Confirm'
+          hidden={isPasswordHidden}
         />
       </SignForm.InputWrapper>
       <label className='self-start mt-2 hover:cursor-pointer flex items-center gap-4 text-sm'>

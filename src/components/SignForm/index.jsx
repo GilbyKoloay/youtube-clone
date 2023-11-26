@@ -66,7 +66,7 @@ const Button = ({
 
 const Form = ({ onSubmit, children }) => {
   return (
-    <form onSubmit={onSubmit} className='max-w-md pt-14 pb-20 px-8 border border-neutral-300 rounded-lg flex flex-col items-center'>
+    <form onSubmit={onSubmit} className='w-96 pt-14 pb-20 px-8 border border-neutral-300 rounded-lg flex flex-col items-center'>
       <img src={Google} alt='google' />
       {children}
     </form>
