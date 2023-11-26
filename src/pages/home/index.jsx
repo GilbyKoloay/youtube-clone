@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
 import { Header, NavMaximized, NavMinimized } from '../../components';
-import Main from './Main';
+import CategoryList from './CategoryList';
+import VideoList from './VideoList';
 
 
 
@@ -23,7 +24,11 @@ const Home = () => {
       <div className='flex-1 flex overflow-auto'>
         {(navbarSize === 'maximized') && <NavMaximized />}
         {(navbarSize === 'minimized') && <NavMinimized />}
-        <Main />
+        
+        <main className='pt-3 pb-8 pl-8 flex-1 overflow-auto flex flex-col'>
+          <CategoryList />
+          <VideoList />
+        </main>
       </div>
     </div>
   );
