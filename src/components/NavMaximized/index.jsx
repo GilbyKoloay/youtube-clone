@@ -34,7 +34,7 @@ const Button = ({
   return (
     <button className={`w-full py-2 px-3 rounded-lg flex items-center gap-6 ${isActive ? 'bg-neutral-800 hover:bg-neutral-700' : 'hover:bg-neutral-800'}`} onClick={onClick}>
       <img src={imgSrc} alt='item-img' className='max-h-8' />
-      <span className={`text-sm ${isActive ? 'font-bold' : ''}`}>{children}</span>
+      <span className={`text-sm ${isActive ? 'font-bold' : ''} whitespace-nowrap`}>{children}</span>
     </button>
   );
 };
@@ -48,7 +48,7 @@ const Hr = () => {
 
 
 const BottomSectionButton = ({ children }) => {
-  return <button className='text-xs font-bold text-neutral-400'>{children}</button>
+  return <button className='text-xs font-bold text-neutral-400 whitespace-nowrap'>{children}</button>
 };
 
 
