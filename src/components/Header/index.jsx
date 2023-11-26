@@ -23,6 +23,7 @@ const Header = ({ burgerOnClick }) => {
 
   return (
     <header className='py-2 pl-4 pr-8 flex justify-between gap-48'>
+      {/* <----- left */}
       <div className='flex gap-4'>
         <button className='p-2 rounded-full hover:bg-neutral-800'>
           <img
@@ -39,9 +40,11 @@ const Header = ({ burgerOnClick }) => {
           onClick={() => navigate('/')}
         />
       </div>
+      {/* left -----> */}
 
 
 
+      {/* <----- middle */}
       <div className='flex-1 flex justify-center'>
         <div className={`w-full h-full border ${isSearchQueryFocused ? 'border-blue-800' : 'border-neutral-800'} rounded-l-full pl-4 pr-2 flex justify-between items-center`}>
           <img
@@ -78,9 +81,11 @@ const Header = ({ burgerOnClick }) => {
           <img src={Microphone} alt='microphone' />
         </button>
       </div>
+      {/* middle -----> */}
 
 
 
+      {/* <----- right */}
       <div className='flex gap-2 items-center'>
         <button className='p-2 rounded-full hover:bg-neutral-800' title='Settings'>
           <img src={Dots} alt='settings' />
@@ -88,6 +93,7 @@ const Header = ({ burgerOnClick }) => {
 
         <SignInButton />
       </div>
+      {/* right -----> */}
     </header>
   );
 };
