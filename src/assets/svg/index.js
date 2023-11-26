@@ -6,7 +6,7 @@ import Search from './search.svg';
 import Cross from './cross.svg';
 import Microphone from './microphone.svg';
 import Dots from './dots.svg';
-import Profile from './profile.svg';
+import ProfileEllipse from './profile-ellipse.svg';
 import Home from './home.svg';
 import Shorts from './shorts.svg';
 import Subscriptions from './subscriptions.svg';
@@ -26,6 +26,13 @@ import Settings from './settings.svg';
 import Flag from './flag.svg';
 import Help from './help.svg';
 import Feedback from './feedback.svg';
+import Like from './like.svg';
+import Dislike from './dislike.svg';
+import Share from './share.svg';
+import Download from './download.svg';
+import Videos from './videos.svg';
+import ProfileRectangle from './profile-rectangle.svg';
+import Filter from './filter.svg';
 
 
 
@@ -36,7 +43,7 @@ export {
   Cross,
   Microphone,
   Dots,
-  Profile,
+  ProfileEllipse,
   Home,
   Shorts,
   Subscriptions,
@@ -55,5 +62,12 @@ export {
   Settings,
   Flag,
   Help,
-  Feedback
+  Feedback,
+  Like,
+  Dislike,
+  Share,
+  Download,
+  Videos,
+  ProfileRectangle,
+  Filter
 };
