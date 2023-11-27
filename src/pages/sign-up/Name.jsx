@@ -8,6 +8,7 @@ const Name = ({
   onSubmit,
   firstName,
   setFirstName,
+  firstNameErrMsg,
   lastName,
   setLastName
 }) => {
@@ -27,6 +28,7 @@ const Name = ({
           value={firstName}
           onChange={setFirstName}
           placeholder='First name'
+          errMsg={firstNameErrMsg}
         />
         <SignForm.Input
           value={lastName}

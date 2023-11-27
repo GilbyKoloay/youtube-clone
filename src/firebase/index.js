@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 
 
 
@@ -11,5 +12,30 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
-
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+
+
+export async function isEmailAlreadyExist(email) {
+  try {
+    const res = await fetchSignInMethodsForEmail(auth, email);
+    return res;
+  }
+  catch (err) {
+    let message = err.message;
+    if (err.code === 'auth/invalid-email') message = 'Email is invalid';
+    return {error: message};
+  }
+}
+
+export async function signUp(email, password) {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    return res;
+  }
+  catch (err) {
+    let message = err.message;
+    return {error: message};
+  }
+};
