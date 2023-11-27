@@ -9,13 +9,18 @@ const Password = ({
   handleEmailOnClick,
   password,
   setPassword,
+  passwordErrMsg,
   isPasswordHidden,
   setIsPasswordHidden
 }) => {
   return (
     <SignForm.Form onSubmit={onSubmit}>
       <SignForm.Title>Welcome</SignForm.Title>
-      <button className='mt-2 mb-10 py-1 px-3 border border-neutral-300 rounded-full text-sm flex items-center gap-2 hover:bg-neutral-100' onClick={handleEmailOnClick}>
+      <button
+        className='mt-2 mb-10 py-1 px-3 border border-neutral-300 rounded-full text-sm flex items-center gap-2 hover:bg-neutral-100'
+        onClick={handleEmailOnClick}
+        type='button'
+      >
         <img src={ProfileEllipse} alt='profile' />
         {emailOrPhone}
         <img
@@ -31,6 +36,7 @@ const Password = ({
           onChange={setPassword}
           placeholder='Enter your password'
           hidden={isPasswordHidden}
+          errMsg={passwordErrMsg}
         />
       </SignForm.InputWrapper>
       <label className='self-start mt-2 hover:cursor-pointer flex items-center gap-4 text-sm'>

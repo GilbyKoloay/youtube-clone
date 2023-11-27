@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { isEmailAlreadyExist as isEmailAlreadyExistFunc, signIn } from '../../firebase';
 import EmailOrPhone from './EmailOrPhone';
 import Password from './Password';
 
@@ -10,8 +11,10 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const [emailOrPhone, setEmailOrPhone] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [emailOrPhoneErrMsg, setEmailOrPhoneErrMsg] = useState('');
+  const [isEmailOrPhoneValid, setIsEmailOrPhoneValid] = useState(false);
   const [password, setPassword] = useState('');
+  const [passwordErrMsg, setPasswordErrMsg] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
 
@@ -19,35 +22,60 @@ const SignIn = () => {
   useEffect(() => {
     document.title = 'YouTube';
   }, []);
-  
+
+  useEffect(() => {
+    setEmailOrPhoneErrMsg('');
+  }, [emailOrPhone]);
+
+  useEffect(() => {
+    setPasswordErrMsg('');
+  }, [password]);
 
 
 
-  function handleEmailOrPhoneOnSubmit(e) {
+  async function handleEmailOrPhoneOnSubmit(e) {
     e.preventDefault();
-    setIsEmailValid(true);
+    
+    if (!emailOrPhone) setEmailOrPhoneErrMsg('Enter an email or phone number');
+    else {
+      const isEmailAlreadyExist = await isEmailAlreadyExistFunc(emailOrPhone);
+
+      if (isEmailAlreadyExist.error) setEmailOrPhoneErrMsg(isEmailAlreadyExist.error);
+      else if (isEmailAlreadyExist.length === 0) setEmailOrPhoneErrMsg('Couldn\'t find your Google Account');
+      else setIsEmailOrPhoneValid(true);
+    }
   }
 
   function handleEmailOnClick() {
-    setIsEmailValid(false);
+    setEmailOrPhoneErrMsg('');
+    setIsEmailOrPhoneValid(false);
     setPassword('');
+    setPasswordErrMsg('');
     setIsPasswordHidden(true);
   }
 
-  function handlePasswordOnSubmit(e) {
+  async function handlePasswordOnSubmit(e) {
     e.preventDefault();
-    navigate('/');
+    
+    if (!password) setPasswordErrMsg('Enter a password');
+    else {
+      const isUserSignedIn = await signIn(emailOrPhone, password);
+
+      if (isUserSignedIn.error) setPasswordErrMsg('Wrong password. Try again.');
+      else navigate('/');
+    }
   }
 
 
 
   return (
     <div className='h-screen flex justify-center items-center' style={{backgroundColor: '#ffffff', color: '#000000'}}>
-      {!isEmailValid ? (
+      {!isEmailOrPhoneValid ? (
         <EmailOrPhone
           onSubmit={handleEmailOrPhoneOnSubmit}
           emailOrPhone={emailOrPhone}
           setEmailOrPhone={setEmailOrPhone}
+          emailOrPhoneErrMsg={emailOrPhoneErrMsg}
           handleCreateAccountOnClick={() => navigate('/sign-up')}
         />
       ) : (
@@ -57,6 +85,7 @@ const SignIn = () => {
           handleEmailOnClick={handleEmailOnClick}
           password={password}
           setPassword={setPassword}
+          passwordErrMsg={passwordErrMsg}
           isPasswordHidden={isPasswordHidden}
           setIsPasswordHidden={setIsPasswordHidden}
         />

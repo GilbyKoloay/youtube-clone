@@ -1,5 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+  signInWithEmailAndPassword
+} from 'firebase/auth';
 
 
 
@@ -36,6 +41,18 @@ export async function signUp(email, password) {
   }
   catch (err) {
     let message = err.message;
+    return {error: message};
+  }
+};
+
+export async function signIn(email, password) {
+  try {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    return res;
+  }
+  catch (err) {
+    let message = err.message;
+    if (err.code === 'auth/invalid-login-credentials') message = 'Email or password is invalid';
     return {error: message};
   }
 };
