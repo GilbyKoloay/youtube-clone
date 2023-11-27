@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -19,16 +19,10 @@ import { SignInButton } from '../';
 const Header = ({ burgerOnClick }) => {
   const navigate = useNavigate();
 
-  const user = useAuthState();
+  const auth = useAuthState();
 
   const [isSearchQueryFocused, setIsSearchQueryFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-
-
-  useEffect(() => {
-    console.log('user', user);
-  }, [user]);
 
 
 
@@ -102,7 +96,7 @@ const Header = ({ burgerOnClick }) => {
           <img src={Dots} alt='settings' />
         </button>
 
-        {!user ? (
+        {!auth ? (
           <SignInButton />
         ) : (
           <button

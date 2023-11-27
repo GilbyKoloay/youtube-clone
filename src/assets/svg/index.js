@@ -28,8 +28,10 @@ import Settings from './settings.svg';
 import Flag from './flag.svg';
 import Help from './help.svg';
 import Feedback from './feedback.svg';
-import Like from './like.svg';
-import Dislike from './dislike.svg';
+import LikeLight from './like-light.svg';
+import LikeDark from './like-dark.svg';
+import DislikeLight from './dislike-light.svg';
+import DislikeDark from './dislike-dark.svg';
 import Share from './share.svg';
 import Download from './download.svg';
 import Videos from './videos.svg';
@@ -70,8 +72,10 @@ export {
   Flag,
   Help,
   Feedback,
-  Like,
-  Dislike,
+  LikeLight,
+  LikeDark,
+  DislikeLight,
+  DislikeDark,
   Share,
   Download,
   Videos,

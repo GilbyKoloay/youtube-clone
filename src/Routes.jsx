@@ -1,5 +1,6 @@
 import { Routes as RNDRoutes, Route } from 'react-router-dom';
 
+import { useAuthState } from './hooks';
 import {
   Home,
   Video,
@@ -11,12 +12,20 @@ import {
 
 
 const Routes = () => {
+  const auth = useAuthState();
+
+
+
   return (
     <RNDRoutes>
       <Route path='/' element={<Home />} />
       <Route path='/:id' element={<Video />} />
-      <Route path='/sign-in' element={<SignIn />} />
-      <Route path='/sign-up' element={<SignUp />} />
+      {!auth && (
+        <>
+          <Route path='/sign-in' element={<SignIn />} />
+          <Route path='/sign-up' element={<SignUp />} />
+        </>
+      )}
       <Route path='/not-found' element={<NotFound />} />
     </RNDRoutes>
   );

@@ -6,6 +6,13 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut
 } from 'firebase/auth';
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  getDoc,
+  onSnapshot
+} from 'firebase/firestore';
 
 
 
@@ -20,9 +27,11 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+export const db = getFirestore(app);
 
 
 
+// <----- AUTH
 export async function isEmailAlreadyExist(email) {
   try {
     const res = await fetchSignInMethodsForEmail(auth, email);
@@ -35,14 +44,13 @@ export async function isEmailAlreadyExist(email) {
   }
 }
 
-export async function signUp(email, password) {
+export async function signUp(email, password, payload) {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    return res;
+    setUser(res.user.uid, {email, ...payload});
   }
   catch (err) {
-    let message = err.message;
-    return {error: message};
+    
   }
 };
 
@@ -61,3 +69,168 @@ export async function signIn(email, password) {
 export function signOut() {
   firebaseSignOut(auth);
 };
+// AUTH ----->
+
+
+
+// <----- FIRESTORE
+export function setUser(id, payload) {
+  try {
+    setDoc(doc(db, 'users', id), payload);
+  }
+  catch (err) {
+
+  }
+};
+
+async function getUserDoc(id) {
+  try {
+    const docRef = doc(db, 'users', id);
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) return docSnap.data();
+    return null;
+  }
+  catch (err) {
+
+  }
+};
+
+export function getUser(id, callback=()=>{}) {
+  try {
+    onSnapshot(doc(db, 'users', id), doc => {
+      if (doc.exists()) callback(doc.data());
+      else callback(null);
+    });
+  }
+  catch (err) {
+    callback(null);
+  }
+};
+
+function setVideo(id, payload) {
+  try {
+    setDoc(doc(db, 'videos', id), payload);
+  }
+  catch (err) {
+    
+  }
+};
+
+async function getVideoDoc(id) {
+  try {
+    const docRef = doc(db, 'videos', id);
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) return docSnap.data();
+    return null;
+  }
+  catch (err) {
+
+  }
+};
+
+export function getVideo(id, callback=()=>{}) {
+  try {
+    onSnapshot(doc(db, 'videos', id), doc => {
+      if (doc.exists()) callback(doc.data());
+      else callback(null);
+    });
+  }
+  catch (err) {
+    callback(null);
+  }
+};
+
+export async function likeVideo(userId, videoId, isLiked) {
+  try {
+    // update the user
+    const prevUserData = await getUserDoc(userId);
+    let newUserData = {};
+
+    if (isLiked) {
+      newUserData = {
+        ...prevUserData,
+        likedVideos: [...prevUserData.likedVideos, videoId]
+      };
+    }
+    else {
+      newUserData = {
+        ...prevUserData,
+        likedVideos: prevUserData.likedVideos.filter(likedVideo => likedVideo !== videoId)
+      };
+    }
+
+    setUser(userId, newUserData);
+
+    // update the video
+    const prevVideoData = await getVideoDoc(videoId);
+    let newVideoData = {};
+
+    if (!prevVideoData) {
+      newVideoData = {
+        likes: 1,
+        dislikes: 0,
+        comments: []
+      };
+    }
+    else {
+      newVideoData = {
+        ...prevVideoData,
+        likes: prevVideoData.likes += (isLiked ? 1 : -1)
+      }
+    }
+
+    setVideo(videoId, newVideoData);
+  }
+  catch (err) {
+
+  }
+};
+
+export async function dislikeVideo(userId, videoId, isDisliked) {
+  try {
+    // update the user
+    const prevUserData = await getUserDoc(userId);
+    let newUserData = {};
+
+    if (isDisliked) {
+      newUserData = {
+        ...prevUserData,
+        dislikedVideos: [...prevUserData.dislikedVideos, videoId]
+      };
+    }
+    else {
+      newUserData = {
+        ...prevUserData,
+        dislikedVideos: prevUserData.dislikedVideos.filter(dislikedVideo => dislikedVideo !== videoId)
+      };
+    }
+
+    setUser(userId, newUserData);
+
+    // update the video
+    const prevVideoData = await getVideoDoc(videoId);
+    let newVideoData = {};
+
+    if (!prevVideoData) {
+      newVideoData = {
+        likes: 0,
+        dislikes: 1,
+        comments: []
+      };
+    }
+    else {
+      newVideoData = {
+        ...prevVideoData,
+        dislikes: prevVideoData.dislikes += (isDisliked ? 1 : -1)
+      }
+    }
+
+    setVideo(videoId, newVideoData);
+  }
+  catch (err) {
+
+  }
+};
+// FIRESTORE ----->

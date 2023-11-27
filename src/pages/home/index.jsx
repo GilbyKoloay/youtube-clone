@@ -36,7 +36,7 @@ const Home = () => {
   }
 
   async function getCategoryList() {
-    const req = await fetch(`https://www.googleapis.com/youtube/v3/videoCategories?key=${youtubeApiKey}&regionCode=MY`);
+    const req = await fetch(`https://www.googleapis.com/youtube/v3/videoCategories?regionCode=MY&key=${youtubeApiKey}`);
     const res = await req.json();
 
     if (res.error) console.log('Unabe to load video categories.', res.error);
@@ -56,7 +56,7 @@ const Home = () => {
   }
 
   async function getVideoList() {
-    const req = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?key=${youtubeApiKey}&regionCode=MY${selectedCategoryId ? `&videoCategoryId=${selectedCategoryId}` : ''}&chart=mostPopular&maxResults=9&part=snippet%2CcontentDetails%2Cstatistics`);
+    const req = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=MY&videoCategoryId=${selectedCategoryId}&key=${youtubeApiKey}`);
     const res = await req.json();
     
     if (res.error) console.log('Unable to load videos.', res.error);

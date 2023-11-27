@@ -64,16 +64,21 @@ const SignUp = () => {
     }
   }
 
-  async function handlePasswordOnSubmit(e) {
+  function handlePasswordOnSubmit(e) {
     e.preventDefault();
     
     if (!password) setPasswordErrMsg('Enter a password');
+    else if (password.length < 8) setPasswordErrMsg('Use 8 characters or more for your password');
     else if (!confirmPassword) setConfirmPasswordErrMsg('Confirm your password');
     else if (password !== confirmPassword) setConfirmPasswordErrMsg('Those passwords didn\'t match. Try again.');
     else {
-      const isUserSignedUp = await signUp(email, password);
-      
-      if (!isUserSignedUp.error) navigate('/');
+      signUp(email, password, {
+        firstName,
+        lastName: lastName ? lastName : null,
+        likedVideos: [],
+        dislikedVideos: []
+      });
+      navigate('/');
     }
   }
 
