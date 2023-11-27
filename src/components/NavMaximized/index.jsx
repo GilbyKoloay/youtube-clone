@@ -58,7 +58,7 @@ const NavMaximized = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const user = useAuthState();
+  const auth = useAuthState();
 
 
 
@@ -85,7 +85,7 @@ const NavMaximized = () => {
 
       <Hr />
 
-      {!user && (
+      {!auth && (
         <>
           <section className='py-4 px-8 flex flex-col'>
             <span className='text-sm'>Sign in to like videos,</span>

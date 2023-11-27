@@ -19,7 +19,7 @@ import { SignInButton } from '../';
 const Header = ({ burgerOnClick }) => {
   const navigate = useNavigate();
 
-  const user = useAuthState();
+  const auth = useAuthState();
 
   const [isSearchQueryFocused, setIsSearchQueryFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -96,7 +96,7 @@ const Header = ({ burgerOnClick }) => {
           <img src={Dots} alt='settings' />
         </button>
 
-        {!user ? (
+        {!auth ? (
           <SignInButton />
         ) : (
           <button
