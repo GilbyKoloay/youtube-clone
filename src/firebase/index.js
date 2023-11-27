@@ -6,6 +6,12 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut
 } from 'firebase/auth';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  setDoc
+} from 'firebase/firestore/lite';
 
 
 
@@ -20,9 +26,11 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const db = getFirestore(app);
 
 
 
+// <----- AUTH
 export async function isEmailAlreadyExist(email) {
   try {
     const res = await fetchSignInMethodsForEmail(auth, email);
@@ -61,3 +69,17 @@ export async function signIn(email, password) {
 export function signOut() {
   firebaseSignOut(auth);
 };
+// AUTH ----->
+
+
+
+// <----- FIRESTORE
+export function postUser(payload) {
+  try {
+    addDoc(collection(db, 'users'), payload);
+  }
+  catch (err) {
+    
+  }
+};
+// FIRESTORE ----->

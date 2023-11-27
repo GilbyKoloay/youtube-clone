@@ -36,18 +36,18 @@ const Home = () => {
   }
 
   async function getCategoryList() {
-    const req = await fetch(`https://www.googleapis.com/youtube/v3/videoCategories?key=${youtubeApiKey}&regionCode=MY`);
-    const res = await req.json();
+    // const req = await fetch(`https://www.googleapis.com/youtube/v3/videoCategories?key=${youtubeApiKey}&regionCode=MY`);
+    // const res = await req.json();
 
-    if (res.error) console.log('Unabe to load video categories.', res.error);
-    else if (res.items) {
-      const newCategoryList = res.items.map(item => ({
-        id: item?.id,
-        name: item?.snippet?.title
-      }));
+    // if (res.error) console.log('Unabe to load video categories.', res.error);
+    // else if (res.items) {
+    //   const newCategoryList = res.items.map(item => ({
+    //     id: item?.id,
+    //     name: item?.snippet?.title
+    //   }));
 
-      setCategoryList(newCategoryList);
-    }
+    //   setCategoryList(newCategoryList);
+    // }
   }
 
   function handleCategoryOnClick(id) {
@@ -56,24 +56,24 @@ const Home = () => {
   }
 
   async function getVideoList() {
-    const req = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?key=${youtubeApiKey}&regionCode=MY${selectedCategoryId ? `&videoCategoryId=${selectedCategoryId}` : ''}&chart=mostPopular&maxResults=9&part=snippet%2CcontentDetails%2Cstatistics`);
-    const res = await req.json();
+    // const req = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?key=${youtubeApiKey}&regionCode=MY${selectedCategoryId ? `&videoCategoryId=${selectedCategoryId}` : ''}&chart=mostPopular&maxResults=9&part=snippet%2CcontentDetails%2Cstatistics`);
+    // const res = await req.json();
     
-    if (res.error) console.log('Unable to load videos.', res.error);
-    else if (res.items) {
-      const newVideos = res.items.map(item => ({
-        id: item?.id,
-        thumbnail: item?.snippet.thumbnails?.maxres?.url,
-        duration: item?.contentDetails?.duration,
-        title: item?.snippet?.localized?.title,
-        channelId: item?.snippet?.channelId,
-        channelName: item?.snippet?.channelTitle,
-        views: item?.statistics?.viewCount,
-        publishedAt: item?.snippet?.publishedAt
-      }));
+    // if (res.error) console.log('Unable to load videos.', res.error);
+    // else if (res.items) {
+    //   const newVideos = res.items.map(item => ({
+    //     id: item?.id,
+    //     thumbnail: item?.snippet.thumbnails?.maxres?.url,
+    //     duration: item?.contentDetails?.duration,
+    //     title: item?.snippet?.localized?.title,
+    //     channelId: item?.snippet?.channelId,
+    //     channelName: item?.snippet?.channelTitle,
+    //     views: item?.statistics?.viewCount,
+    //     publishedAt: item?.snippet?.publishedAt
+    //   }));
       
-      setVideoList(prev => [...prev, ...newVideos]);
-    }
+    //   setVideoList(prev => [...prev, ...newVideos]);
+    // }
   }
 
 

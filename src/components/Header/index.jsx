@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -23,12 +23,6 @@ const Header = ({ burgerOnClick }) => {
 
   const [isSearchQueryFocused, setIsSearchQueryFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-
-
-  useEffect(() => {
-    console.log('user', user);
-  }, [user]);
 
 
 

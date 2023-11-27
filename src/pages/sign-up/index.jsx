@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { isEmailAlreadyExist as isEmailAlreadyExistFunc, signUp } from '../../firebase';
+import { isEmailAlreadyExist as isEmailAlreadyExistFunc, signUp, postUser } from '../../firebase';
 import Name from './Name';
 import Email from './Email';
 import Password from './Password';
@@ -73,7 +73,17 @@ const SignUp = () => {
     else {
       const isUserSignedUp = await signUp(email, password);
       
-      if (!isUserSignedUp.error) navigate('/');
+      if (!isUserSignedUp.error) {
+        postUser({
+          email,
+          password,
+          firstName,
+          lastName: lastName ? lastName : null,
+          likedVideos: [],
+          dislikedVideos: []
+        });
+        navigate('/');
+      }
     }
   }
 

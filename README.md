@@ -5,4 +5,4 @@
 - ✔️ User Authentication
 - ❌ Liking and disliking videos
 - ❌ Adding comments to videos
-- ❌ Displaying video descriptions
+- ✔️ Displaying video descriptions
