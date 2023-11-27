@@ -1,6 +1,6 @@
 import { Routes as RNDRoutes, Route } from 'react-router-dom';
 
-import { useAuthState } from './hooks';
+import { useAppState } from './hooks';
 import {
   Home,
   Video,
@@ -12,7 +12,7 @@ import {
 
 
 const Routes = () => {
-  const auth = useAuthState();
+  const { auth } = useAppState();
 
 
 

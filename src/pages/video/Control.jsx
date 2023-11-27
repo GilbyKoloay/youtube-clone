@@ -13,11 +13,10 @@ import {
 import {
   likeVideo,
   dislikeVideo,
-  getVideo,
-  getUser
+  getVideo
 } from '../../firebase';
 import { toProperCount } from '../../functions';
-import { useAuthState } from '../../hooks';
+import { useAppState } from '../../hooks';
 
 
 
@@ -65,26 +64,23 @@ const Control = ({ video, setVideo }) => {
   const likeDialogRef = useRef();
   const dislikedialogRef = useRef();
 
-  const auth = useAuthState();
+  const { auth, user } = useAppState();
 
-  const [user, setUser] = useState(null);
   const [firebaseVideo, setFirebaseVideo] = useState(null);
   const [isVideoLiked, setIsVideoLiked] = useState(null);
   const [isVideoDisliked, setIsVideoDisliked] = useState(null);
 
-
-
-  useEffect(() => {
-    if (auth) getUser(auth.uid, setUser);
-  }, [auth]);
+  
 
   useEffect(() => {
     if (video) getVideo(video.id, setFirebaseVideo);
   }, [video]);
 
   useEffect(() => {
-    if (user && video) {
-      checkIsVideoLikedOrDisliked();
+    if (user && video) checkIsVideoLikedOrDisliked();
+    else if (!user) {
+      setIsVideoLiked(false);
+      setIsVideoDisliked(false);
     }
   }, [user, video]);
 
@@ -164,7 +160,6 @@ const Control = ({ video, setVideo }) => {
           </div>
         )
       }
-      
       {/* left -----> */}
 
       {/* <----- right */}
@@ -177,7 +172,7 @@ const Control = ({ video, setVideo }) => {
         : (
           <div className='flex gap-2'>
             <div className='flex items-center'>
-              {((isVideoLiked !== null) && firebaseVideo) && (
+              {firebaseVideo && (
                 <>
                   <button
                     className={`py-2 px-4 border-r border-neutral-500 rounded-l-full font-bold text-sm ${isVideoLiked ? 'bg-neutral-200 hover:bg-neutral-300 text-neutral-700' : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-300'} flex items-center gap-1`}
@@ -193,11 +188,7 @@ const Control = ({ video, setVideo }) => {
                     title='Like this video?'
                     text='Sign in to make your opinion count.'
                   />
-                </>
-              )}
 
-              {((isVideoDisliked !== null) && firebaseVideo) && (
-                <>
                   <button
                     className={`py-2 px-4 border-l border-neutral-500 rounded-r-full font-bold text-sm ${isVideoDisliked ? 'bg-neutral-200 hover:bg-neutral-300 text-neutral-700' : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-300'} flex items-center gap-1`}
                     onClick={auth ? () => handleDislikeOnClick() : () => dislikedialogRef.current.showModal()}

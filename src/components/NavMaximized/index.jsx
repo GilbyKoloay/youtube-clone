@@ -21,7 +21,7 @@ import {
   Help,
   Feedback
 } from '../../assets/svg';
-import { useAuthState } from '../../hooks';
+import { useAppState } from '../../hooks';
 import { SignInButton } from '../';
 
 
@@ -58,7 +58,7 @@ const NavMaximized = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const auth = useAuthState();
+  const { auth } = useAppState();
 
 
 
