@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { isEmailAlreadyExist as isEmailAlreadyExistFunc, signUp, postUser } from '../../firebase';
+import { isEmailAlreadyExist as isEmailAlreadyExistFunc, signUp } from '../../firebase';
 import Name from './Name';
 import Email from './Email';
 import Password from './Password';
@@ -64,26 +64,21 @@ const SignUp = () => {
     }
   }
 
-  async function handlePasswordOnSubmit(e) {
+  function handlePasswordOnSubmit(e) {
     e.preventDefault();
     
     if (!password) setPasswordErrMsg('Enter a password');
+    else if (password.length < 8) setPasswordErrMsg('Use 8 characters or more for your password');
     else if (!confirmPassword) setConfirmPasswordErrMsg('Confirm your password');
     else if (password !== confirmPassword) setConfirmPasswordErrMsg('Those passwords didn\'t match. Try again.');
     else {
-      const isUserSignedUp = await signUp(email, password);
-      
-      if (!isUserSignedUp.error) {
-        postUser({
-          email,
-          password,
-          firstName,
-          lastName: lastName ? lastName : null,
-          likedVideos: [],
-          dislikedVideos: []
-        });
-        navigate('/');
-      }
+      signUp(email, password, {
+        firstName,
+        lastName: lastName ? lastName : null,
+        likedVideos: [],
+        dislikedVideos: []
+      });
+      navigate('/');
     }
   }
 

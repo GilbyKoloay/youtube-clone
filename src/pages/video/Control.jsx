@@ -2,13 +2,22 @@ import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  Like,
-  Dislike,
+  LikeLight,
+  LikeDark,
+  DislikeLight,
+  DislikeDark,
   Share,
   Download,
   Dots
 } from '../../assets/svg';
+import {
+  likeVideo,
+  dislikeVideo,
+  getVideo,
+  getUser
+} from '../../firebase';
 import { toProperCount } from '../../functions';
+import { useAuthState } from '../../hooks';
 
 
 
@@ -53,12 +62,77 @@ const ChannelImage = ({ channelId, video, setVideo }) => {
 
 const Control = ({ video, setVideo }) => {
   const subscribeDialogRef = useRef();
+  const likeDialogRef = useRef();
+  const dislikedialogRef = useRef();
+
+  const auth = useAuthState();
+
+  const [user, setUser] = useState(null);
+  const [firebaseVideo, setFirebaseVideo] = useState(null);
+  const [isVideoLiked, setIsVideoLiked] = useState(null);
+  const [isVideoDisliked, setIsVideoDisliked] = useState(null);
 
 
+
+  useEffect(() => {
+    if (auth) getUser(auth.uid, setUser);
+  }, [auth]);
+
+  useEffect(() => {
+    if (video) getVideo(video.id, setFirebaseVideo);
+  }, [video]);
+
+  useEffect(() => {
+    if (user && video) {
+      checkIsVideoLikedOrDisliked();
+    }
+  }, [user, video]);
+
+
+
+  function checkIsVideoLikedOrDisliked() {
+    // check is video liked
+    if (user.likedVideos.includes(video.id)) setIsVideoLiked(true);
+    else setIsVideoLiked(false);
+
+    // check is video disliked
+    if (user.dislikedVideos.includes(video.id)) setIsVideoDisliked(true);
+    else setIsVideoDisliked(false);
+  }
 
   function removeFloatingPointValue(value) {
     if (toProperCount(value).includes('.')) return `${toProperCount(value).slice(0, -3)}${toProperCount(value).slice(-1)}`;
-    return value;
+    return toProperCount(value);
+  }
+
+  function handleLikeOnClick() {
+    if (isVideoDisliked) {
+      dislikeVideo(auth.uid, video.id, false);
+      setIsVideoDisliked(false);
+    }
+    else if (isVideoLiked) {
+      likeVideo(auth.uid, video.id, false);
+      setIsVideoLiked(false);
+    }
+    else {
+      likeVideo(auth.uid, video.id, true);
+      setIsVideoLiked(true);
+    }
+  }
+
+  function handleDislikeOnClick() {
+    if (isVideoLiked) {
+      likeVideo(auth.uid, video.id, false);
+      setIsVideoLiked(false);
+    }
+    else if (isVideoDisliked) {
+      dislikeVideo(auth.uid, video.id, false);
+      setIsVideoDisliked(false);
+    }
+    else {
+      dislikeVideo(auth.uid, video.id, true);
+      setIsVideoDisliked(true);
+    }
   }
 
 
@@ -81,8 +155,12 @@ const Control = ({ video, setVideo }) => {
               <div className='font-bold'>{video.channelName}</div>
               <div className='text-xs text-neutral-500'>{removeFloatingPointValue(video.subscribers)} subscribers</div>
             </div>
-            <SubscribeDialog thisRef={subscribeDialogRef} />
-            <ControlButton onClick={() => subscribeDialogRef.current.showModal()} theme='light' isLong>Subscribe</ControlButton>
+            <ControlButton onClick={auth ? null : () => subscribeDialogRef.current.showModal()} theme='light' isLong>Subscribe</ControlButton>
+            <SignInDialog
+              thisRef={subscribeDialogRef}
+              title='Want to subscribe to this channel?'
+              text='Sign in to subscribe to this channel.'
+            />
           </div>
         )
       }
@@ -99,14 +177,42 @@ const Control = ({ video, setVideo }) => {
         : (
           <div className='flex gap-2'>
             <div className='flex items-center'>
-              <button className='py-2 px-4 border-r border-neutral-500 rounded-l-full font-bold text-sm bg-neutral-800 hover:bg-neutral-700 text-neutral-300 flex items-center gap-1' title='I like this'>
-                <img src={Like} alt='like' />
-                {removeFloatingPointValue(video.likes)}
-              </button>
-              <button className='py-2 px-4 border-l border-neutral-500 rounded-r-full font-bold text-sm bg-neutral-800 hover:bg-neutral-700 text-neutral-300 flex items-center gap-1' title='I dislike this'>
-                <img src={Dislike} alt='dislike' />
-                {removeFloatingPointValue(video.dislikes)}
-              </button>
+              {((isVideoLiked !== null) && firebaseVideo) && (
+                <>
+                  <button
+                    className={`py-2 px-4 border-r border-neutral-500 rounded-l-full font-bold text-sm ${isVideoLiked ? 'bg-neutral-200 hover:bg-neutral-300 text-neutral-700' : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-300'} flex items-center gap-1`}
+                    onClick={auth ? () => handleLikeOnClick() : () => likeDialogRef.current.showModal()}
+                    title={isVideoLiked ? 'Unlike' :'I like this'}
+                  >
+                    <img src={isVideoLiked ? LikeDark : LikeLight} alt='like' />
+                    {/* {removeFloatingPointValue(parseInt(video.likes) + likes)} */}
+                    {parseInt(video.likes) + firebaseVideo.likes}
+                  </button>
+                  <SignInDialog
+                    thisRef={likeDialogRef}
+                    title='Like this video?'
+                    text='Sign in to make your opinion count.'
+                  />
+                </>
+              )}
+
+              {((isVideoDisliked !== null) && firebaseVideo) && (
+                <>
+                  <button
+                    className={`py-2 px-4 border-l border-neutral-500 rounded-r-full font-bold text-sm ${isVideoDisliked ? 'bg-neutral-200 hover:bg-neutral-300 text-neutral-700' : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-300'} flex items-center gap-1`}
+                    onClick={auth ? () => handleDislikeOnClick() : () => dislikedialogRef.current.showModal()}
+                    title='I dislike this'
+                  >
+                    <img src={isVideoDisliked ? DislikeDark : DislikeLight} alt='dislike' />
+                    {removeFloatingPointValue(firebaseVideo.dislikes)}
+                  </button>
+                  <SignInDialog
+                    thisRef={dislikedialogRef}
+                    title={`Don't like this video?`}
+                    text='Sign in to make your opinion count.'
+                  />
+                </>
+              )}
             </div>
 
             <ControlButton title='Share' isLong>
@@ -134,15 +240,15 @@ const Control = ({ video, setVideo }) => {
 
 
 
-const SubscribeDialog = ({ thisRef }) => {
+const SignInDialog = ({ thisRef, title, text }) => {
   const navigate = useNavigate();
 
 
 
   return (
     <dialog className='bg-neutral-800 py-4 pl-6 pr-28' ref={thisRef}>
-      <div className='text-lg text-neutral-300'>Want to subscribe to this channel?</div>
-      <div className='mt-3 text-sm text-neutral-400'>Sign in to subscribe to this channel.</div>
+      <div className='text-lg text-neutral-300'>{title}</div>
+      <div className='mt-3 text-sm text-neutral-400'>{text}</div>
       <button className='text-sm mt-10 py-2 px-4 rounded-full hover:bg-cyan-900 text-blue-500' onClick={() => navigate('/sign-in')}>Sign in</button>
     </dialog>
   );

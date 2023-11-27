@@ -37,12 +37,12 @@ const Video = () => {
     else if (res.items.length === 0) navigate('/not-found');
     else {
       const newVideo = {
+        id,
         title: res.items[0]?.snippet?.localized?.title,
         channelId: res.items[0]?.snippet?.channelId,
         channelName: res.items[0]?.snippet?.channelTitle,
         subscribers: '',
         likes: res.items[0]?.statistics?.likeCount,
-        dislikes: 0,
         views: res.items[0]?.statistics?.viewCount,
         publishedAt: res.items[0]?.snippet?.publishedAt,
         description: res.items[0]?.snippet?.description,

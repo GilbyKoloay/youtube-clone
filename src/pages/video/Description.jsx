@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { Videos, ProfileRectangle } from '../../assets/svg';
-import { countDateDifference } from '../../functions';
+import { toProperCount, countDateDifference } from '../../functions';
 
 
 
@@ -87,7 +87,7 @@ const Description = ({ video }) => {
             <ChannelImage channelId={video.channelId} />
             <div className='flex flex-col'>
               <span className='font-bold text-lg'>{video.channelName}</span>
-              <span className='text-sm'>{video.subscribers} subscribers</span>
+              <span className='text-sm'>{toProperCount(video.subscribers)} subscribers</span>
             </div>
           </div>
 
