@@ -180,8 +180,8 @@ const Control = ({ video, setVideo }) => {
                     title={isVideoLiked ? 'Unlike' :'I like this'}
                   >
                     <img src={isVideoLiked ? LikeDark : LikeLight} alt='like' />
-                    {/* {removeFloatingPointValue(parseInt(video.likes) + likes)} */}
-                    {parseInt(video.likes) + firebaseVideo.likes}
+                    {removeFloatingPointValue(parseInt(video.likes) + firebaseVideo.likes)}
+                    {/* {parseInt(video.likes) + firebaseVideo.likes} */}
                   </button>
                   <SignInDialog
                     thisRef={likeDialogRef}

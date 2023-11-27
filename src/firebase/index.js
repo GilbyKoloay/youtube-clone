@@ -108,16 +108,17 @@ export function getUser(id, callback=()=>{}) {
   }
 };
 
-function setVideo(id, payload) {
+export async function setVideo(id, payload) {
   try {
-    setDoc(doc(db, 'videos', id), payload);
+    const res = await setDoc(doc(db, 'videos', id), payload);
+    return res;
   }
   catch (err) {
-    
+    return {error: err.message};
   }
 };
 
-async function getVideoDoc(id) {
+export async function getVideoDoc(id) {
   try {
     const docRef = doc(db, 'videos', id);
     const docSnap = await getDoc(docRef);
