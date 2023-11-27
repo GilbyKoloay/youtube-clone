@@ -7,7 +7,7 @@ const Comments = ({ video }) => {
   return (
     <div>
       <div className='flex items-center gap-8'>
-        <span className='text-xl font-bold'>{video.comments.length} Comments</span>
+        <span className='text-xl font-bold'>{video.comments} Comments</span>
         <button className='flex items-center gap-2' title='Sort comments'>
           <img src={Filter} alt='filter' />
           <span className='font-bold text-sm'>Sort By</span>
@@ -24,7 +24,7 @@ const Comments = ({ video }) => {
           <input className='text-sm bg-transparent w-full border-b border-neutral-700' placeholder='Add a comment...' />
         </form>
 
-        {video.comments.map((comment, index) => (
+        {/* {video.comments.map((comment, index) => (
           <CommentItem
             key={index}
             img={comment.img}
@@ -32,7 +32,7 @@ const Comments = ({ video }) => {
             dateTime={comment.dateTime}
             comment={comment.comment}
           />
-        ))}
+        ))} */}
       </div>
     </div>
   );

@@ -6,8 +6,10 @@ const Password = ({
   onSubmit,
   password,
   setPassword,
+  passwordErrMsg,
   confirmPassword,
   setConfirmPassword,
+  confirmPasswordErrMsg,
   isPasswordHidden,
   setIsPasswordHidden
 }) => {
@@ -22,12 +24,14 @@ const Password = ({
           onChange={setPassword}
           placeholder='Password'
           hidden={isPasswordHidden}
+          errMsg={passwordErrMsg}
         />
         <SignForm.Input
           value={confirmPassword}
           onChange={setConfirmPassword}
           placeholder='Confirm'
           hidden={isPasswordHidden}
+          errMsg={confirmPasswordErrMsg}
         />
       </SignForm.InputWrapper>
       <label className='self-start mt-2 hover:cursor-pointer flex items-center gap-4 text-sm'>

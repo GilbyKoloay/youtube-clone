@@ -1,8 +1,21 @@
+import { useEffect } from 'react';
+
 import SignForm from '../../components/SignForm';
 
 
 
-const Email = ({ onSubmit, email, setEmail }) => {
+const Email = ({
+  onSubmit,
+  email,
+  setEmail,
+  emailErrMsg
+}) => {
+  useEffect(() => {
+    document.title = 'YouTube';
+  }, []);
+
+
+
   return (
     <SignForm.Form onSubmit={onSubmit}>
       <SignForm.Title>Create your Gmail address</SignForm.Title>
@@ -13,6 +26,7 @@ const Email = ({ onSubmit, email, setEmail }) => {
           value={email}
           onChange={setEmail}
           placeholder='Create a Gmail address'
+          errMsg={emailErrMsg}
         />
       </SignForm.InputWrapper>
       <span className='self-start mt-1 ml-4 text-xs text-neutral-500'>You can use letters, numbers & periods</span>

@@ -6,6 +6,7 @@ const EmailOrPhone = ({
   onSubmit,
   emailOrPhone,
   setEmailOrPhone,
+  emailOrPhoneErrMsg,
   handleCreateAccountOnClick
 }) => {
   return (
@@ -18,6 +19,7 @@ const EmailOrPhone = ({
           value={emailOrPhone}
           onChange={setEmailOrPhone}
           placeholder='Email or phone'
+          errMsg={emailOrPhoneErrMsg}
         />
       </SignForm.InputWrapper>
       <button className='mt-2 text-sm text-blue-500 font-bold text-left self-start'>Forgot email?</button>

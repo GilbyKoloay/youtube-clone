@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import SignForm from '../../components/SignForm';
 
 
@@ -6,9 +8,16 @@ const Name = ({
   onSubmit,
   firstName,
   setFirstName,
+  firstNameErrMsg,
   lastName,
   setLastName
 }) => {
+  useEffect(() => {
+    document.title = 'Create your Google Account'
+  }, []);
+
+
+
   return (
     <SignForm.Form onSubmit={onSubmit}>
       <SignForm.Title>Create a Google Account</SignForm.Title>
@@ -19,6 +28,7 @@ const Name = ({
           value={firstName}
           onChange={setFirstName}
           placeholder='First name'
+          errMsg={firstNameErrMsg}
         />
         <SignForm.Input
           value={lastName}

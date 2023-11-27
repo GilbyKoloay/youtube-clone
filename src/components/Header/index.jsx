@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -7,8 +7,11 @@ import {
   Search,
   Cross,
   Microphone,
-  Dots
+  Dots,
+  Exit
 } from '../../assets/svg';
+import { signOut } from '../../firebase';
+import { useAuthState } from '../../hooks';
 import { SignInButton } from '../';
 
 
@@ -16,8 +19,16 @@ import { SignInButton } from '../';
 const Header = ({ burgerOnClick }) => {
   const navigate = useNavigate();
 
+  const user = useAuthState();
+
   const [isSearchQueryFocused, setIsSearchQueryFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+
+
+  useEffect(() => {
+    console.log('user', user);
+  }, [user]);
 
 
 
@@ -91,7 +102,17 @@ const Header = ({ burgerOnClick }) => {
           <img src={Dots} alt='settings' />
         </button>
 
-        <SignInButton />
+        {!user ? (
+          <SignInButton />
+        ) : (
+          <button
+            className='rounded-full p-2 hover:bg-neutral-800'
+            onClick={signOut}
+            title='sign out'
+          >
+            <img src={Exit} alt='exit' />
+          </button>
+        )}
       </div>
       {/* right -----> */}
     </header>

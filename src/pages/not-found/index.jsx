@@ -12,6 +12,7 @@ const NotFound = () => {
 
 
   useEffect(() => {
+    document.title = '404 Not Found';
     setTimeout(() => navigate('/'), 2500);
   }, []);
 

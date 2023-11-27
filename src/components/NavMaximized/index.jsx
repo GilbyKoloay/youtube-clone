@@ -21,6 +21,7 @@ import {
   Help,
   Feedback
 } from '../../assets/svg';
+import { useAuthState } from '../../hooks';
 import { SignInButton } from '../';
 
 
@@ -34,7 +35,7 @@ const Button = ({
   return (
     <button className={`w-full py-2 px-3 rounded-lg flex items-center gap-6 ${isActive ? 'bg-neutral-800 hover:bg-neutral-700' : 'hover:bg-neutral-800'}`} onClick={onClick}>
       <img src={imgSrc} alt='item-img' className='max-h-8' />
-      <span className={`text-sm ${isActive ? 'font-bold' : ''}`}>{children}</span>
+      <span className={`text-sm ${isActive ? 'font-bold' : ''} whitespace-nowrap`}>{children}</span>
     </button>
   );
 };
@@ -48,7 +49,7 @@ const Hr = () => {
 
 
 const BottomSectionButton = ({ children }) => {
-  return <button className='text-xs font-bold text-neutral-400'>{children}</button>
+  return <button className='text-xs font-bold text-neutral-400 whitespace-nowrap'>{children}</button>
 };
 
 
@@ -56,6 +57,8 @@ const BottomSectionButton = ({ children }) => {
 const NavMaximized = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const user = useAuthState();
 
 
 
@@ -82,13 +85,17 @@ const NavMaximized = () => {
 
       <Hr />
 
-      <section className='py-4 px-8 flex flex-col'>
-        <span className='text-sm'>Sign in to like videos,</span>
-        <span className='text-sm mb-3'>comment, and subscribe.</span>
-        <SignInButton />
-      </section>
+      {!user && (
+        <>
+          <section className='py-4 px-8 flex flex-col'>
+            <span className='text-sm'>Sign in to like videos,</span>
+            <span className='text-sm mb-3'>comment, and subscribe.</span>
+            <SignInButton />
+          </section>
 
-      <Hr />
+          <Hr />
+        </>
+      )}
 
       <section className='p-3'>
         <span className='ml-3 font-bold'>Explore</span>
