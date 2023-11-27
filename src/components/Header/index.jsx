@@ -11,7 +11,7 @@ import {
   Exit
 } from '../../assets/svg';
 import { signOut } from '../../firebase';
-import { useAuthState } from '../../hooks';
+import { useAppState } from '../../hooks';
 import { SignInButton } from '../';
 
 
@@ -19,7 +19,7 @@ import { SignInButton } from '../';
 const Header = ({ burgerOnClick }) => {
   const navigate = useNavigate();
 
-  const auth = useAuthState();
+  const { auth } = useAppState();
 
   const [isSearchQueryFocused, setIsSearchQueryFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');

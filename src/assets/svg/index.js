@@ -40,6 +40,7 @@ import Filter from './filter.svg';
 import Google from './google.svg';
 import ArrowDown from './arrow-down.svg';
 import Exit from './exit.svg';
+import TriangleDown from './triangle-down.svg';
 
 
 
@@ -83,5 +84,6 @@ export {
   Filter,
   Google,
   ArrowDown,
-  Exit
+  Exit,
+  TriangleDown
 };

@@ -21,7 +21,7 @@ import {
   Help,
   Feedback
 } from '../../assets/svg';
-import { useAuthState } from '../../hooks';
+import { useAppState } from '../../hooks';
 import { SignInButton } from '../';
 
 
@@ -58,7 +58,7 @@ const NavMaximized = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const auth = useAuthState();
+  const { auth } = useAppState();
 
 
 
@@ -90,7 +90,9 @@ const NavMaximized = () => {
           <section className='py-4 px-8 flex flex-col'>
             <span className='text-sm'>Sign in to like videos,</span>
             <span className='text-sm mb-3'>comment, and subscribe.</span>
-            <SignInButton />
+            <div>
+              <SignInButton />
+            </div>
           </section>
 
           <Hr />
