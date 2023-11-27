@@ -24,16 +24,25 @@ const Input = ({
   value,
   onChange,
   placeholder,
+  errMsg,
   hidden,
 }) => {
   return (
-    <input
-      className='w-full border border-neutral-300 focus:outline-2 focus:outline-blue-500 rounded p-4'
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      placeholder={placeholder}
-      type={hidden ? 'password' : 'text'}
-    />
+    <div>
+      <input
+        className={`w-full border border-neutral-300 ${errMsg ? 'outline outline-2 outline-red-500' : 'focus:outline-2 focus:outline-blue-500'} rounded p-4`}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        placeholder={placeholder}
+        type={hidden ? 'password' : 'text'}
+      />
+      {errMsg && (
+        <div className='mt-1 flex items-center gap-2'>
+          <span className='bg-red-500 rounded-full' style={{color: '#f1f1f1', fontSize: 10, paddingLeft: 6, paddingRight: 6}}>!</span>
+          <span className='text-red-500 text-xs'>{errMsg}</span>
+        </div>
+      )}
+    </div>
   );
 };
 

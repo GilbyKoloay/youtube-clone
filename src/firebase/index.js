@@ -3,7 +3,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   fetchSignInMethodsForEmail,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut as firebaseSignOut
 } from 'firebase/auth';
 
 
@@ -55,4 +56,8 @@ export async function signIn(email, password) {
     if (err.code === 'auth/invalid-login-credentials') message = 'Email or password is invalid';
     return {error: message};
   }
+};
+
+export function signOut() {
+  firebaseSignOut(auth);
 };

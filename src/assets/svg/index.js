@@ -37,6 +37,7 @@ import ProfileRectangle from './profile-rectangle.svg';
 import Filter from './filter.svg';
 import Google from './google.svg';
 import ArrowDown from './arrow-down.svg';
+import Exit from './exit.svg';
 
 
 
@@ -77,5 +78,6 @@ export {
   ProfileRectangle,
   Filter,
   Google,
-  ArrowDown
+  ArrowDown,
+  Exit
 };
