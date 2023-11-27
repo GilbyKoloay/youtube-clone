@@ -9,7 +9,7 @@ import {
 } from '../../assets/svg';
 import { ProfileColored } from '../../assets/img';
 import { getVideoDoc, setVideo, getVideo } from '../../firebase';
-import { toProperCount } from '../../functions';
+import { toProperCount, countDateDifference } from '../../functions';
 import { useAppState } from '../../hooks';
 
 
@@ -46,7 +46,7 @@ const Comments = ({ video }) => {
 
 
   async function getComments() {
-    const req = await fetch(`https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&maxResults=100&order=relevance&videoId=${video.id}&key=${youtubeApiKey}`);
+    const req = await fetch(`https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&maxResults=50&order=relevance&videoId=${video.id}&key=${youtubeApiKey}`);
     const res = await req.json();
 
     if (res.error) console.log('Unable to load comments.', res.error);
@@ -202,7 +202,7 @@ const CommentItem = ({
       <div className='flex flex-col'>
         <button className='flex items-center gap-1'>
           <span className='text-xs font-bold'>@{name}</span>
-          <span className='text-xs text-neutral-400 hover:text-neutral-100'>{publishedAt}</span>
+          <span className='text-xs text-neutral-400 hover:text-neutral-100'>{countDateDifference(publishedAt)}</span>
         </button>
         <p className='mt-2 text-sm'>{comment}</p>
 

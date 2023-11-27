@@ -25,12 +25,12 @@ const Video = () => {
 
   useEffect(() => {
     checkVideoExistence();
-  }, []);
+  }, [id]);
 
 
 
   async function checkVideoExistence() {
-    const req = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${youtubeApiKey}&id=${id}&part=snippet%2CcontentDetails%2Cstatistics%2Cplayer`);
+    const req = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${youtubeApiKey}&id=${id}&part=snippet%2CcontentDetails%2Cstatistics`);
     const res = await req.json();
 
     if (res.error) console.log('Unable to load video.', res.error);
@@ -38,6 +38,7 @@ const Video = () => {
     else {
       const newVideo = {
         id,
+        player: res.items[0]?.player,
         title: res.items[0]?.snippet?.localized?.title,
         channelId: res.items[0]?.snippet?.channelId,
         channelName: res.items[0]?.snippet?.channelTitle,
@@ -46,7 +47,8 @@ const Video = () => {
         views: res.items[0]?.statistics?.viewCount,
         publishedAt: res.items[0]?.snippet?.publishedAt,
         description: res.items[0]?.snippet?.description,
-        comments: res.items[0]?.statistics?.commentCount
+        comments: res.items[0]?.statistics?.commentCount,
+        category: res.items[0]?.snippet?.categoryId
       };
       setVideo(newVideo);
 
@@ -65,7 +67,16 @@ const Video = () => {
         <div className={`flex-1 pt-6 px-8 ${isNavbarShown ? 'overflow-hidden' : 'overflow-auto'}`}>
           <div className='flex gap-6'>
             <div className='flex-[2] flex flex-col gap-3'>
-              <div className='bg-neutral-500 h-128 aspect-video rounded-xl' />
+              {video && (
+                <iframe
+                  title={video.id}
+                  className='bg-neutral-500 h-128 aspect-video rounded-xl'
+                  src={`//www.youtube.com/embed/${video.id}`}
+                  frameborder='0'
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                  allowfullscreen={true}
+                />
+              )}
               <div className='flex flex-col gap-3'>
                 {video ? (
                   <div className='text-lg font-bold'>{video.title}</div>
@@ -77,7 +88,7 @@ const Video = () => {
                 {video && <Comments video={video} />}
               </div>
             </div>
-            {/* <VideoList /> */}
+            {video && <VideoList category={video.category} />}
           </div>
         </div>
       </div>
