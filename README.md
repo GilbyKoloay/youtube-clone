@@ -3,6 +3,6 @@
 
 ### Features
 - ✔️ User Authentication
-- ❌ Liking and disliking videos
+- ✔️ Liking and disliking videos
 - ❌ Adding comments to videos
 - ✔️ Displaying video descriptions
